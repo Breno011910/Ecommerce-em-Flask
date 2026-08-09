@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Início - E-commerce{% endblock %}
+{% block content %}
+<section class="hero">
+    <h1>Plataforma de E-commerce</h1>
+    <p>Sistema inicial desenvolvido em Flask.</p>
+</section>
+
+<div class="cards">
+    <a class="card" href="{{ url_for('anuncios') }}">
+        <h2>Anúncios</h2>
+        <p>Consultar e administrar anúncios.</p>
+    </a>
+    <a class="card" href="{{ url_for('compras') }}">
+        <h2>Compras</h2>
+        <p>Consultar compras realizadas.</p>
+    </a>
+    <a class="card" href="{{ url_for('favoritos') }}">
+        <h2>Favoritos</h2>
+        <p>Acessar anúncios favoritos.</p>
+    </a>
+    <a class="card" href="{{ url_for('relatorio_vendas') }}">
+        <h2>Relatório de vendas</h2>
+        <p>Consultar vendas realizadas.</p>
+    </a>
+</div>
+{% endblock %}
