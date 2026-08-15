@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+{% block title %}
+Vendas
+{% endblock %}
+
+{% block content %}
+
+<h1>Vendas</h1>
+
+<p>
+    Lista das vendas realizadas no sistema.
+</p>
+
+<br>
+
+{% if registros %}
+
+<table>
+
+    <thead>
+
+        <tr>
+            <th>ID</th>
+            <th>Produto</th>
+            <th>Vendedor</th>
+            <th>Comprador</th>
+            <th>Quantidade</th>
+            <th>Valor unitário</th>
+            <th>Valor total</th>
+            <th>Status</th>
+            <th>Data</th>
+        </tr>
+
+    </thead>
+
+    <tbody>
+
+        {% for venda in registros %}
+
+        <tr>
+
+            <td>
+                {{ venda.id }}
+            </td>
+
+            <td>
+                {{ venda.anuncio.titulo }}
+            </td>
+
+            <td>
+                {{ venda.anuncio.proprietario.nome }}
+            </td>
+
+            <td>
+                {{ venda.comprador.nome }}
+            </td>
+
+            <td>
+                {{ venda.quantidade }}
+            </td>
+
+            <td>
+                R$ {{ "%.2f"|format(venda.valor_unitario) }}
+            </td>
+
+            <td>
+                R$ {{ "%.2f"|format(venda.valor_total) }}
+            </td>
+
+            <td>
+                {{ venda.status }}
+            </td>
+
+            <td>
+                {{ venda.data_compra.strftime('%d/%m/%Y %H:%M') }}
+            </td>
+
+        </tr>
+
+        {% endfor %}
+
+    </tbody>
+
+</table>
+
+{% else %}
+
+<p>
+    Nenhuma venda registrada.
+</p>
+
+{% endif %}
+
+{% endblock %}

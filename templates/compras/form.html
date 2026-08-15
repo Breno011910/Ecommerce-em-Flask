@@ -1,0 +1,175 @@
+{% extends "base.html" %}
+
+{% block title %}
+
+{% if registro %}
+    Editar Compra
+{% else %}
+    Nova Compra
+{% endif %}
+
+{% endblock %}
+
+{% block content %}
+
+<h1>
+
+    {% if registro %}
+        Editar Compra
+    {% else %}
+        Nova Compra
+    {% endif %}
+
+</h1>
+
+<form method="POST">
+
+    <label for="comprador_id">
+        Comprador:
+    </label>
+
+    <select
+        id="comprador_id"
+        name="comprador_id"
+        required
+    >
+
+        <option value="">
+            Selecione um comprador
+        </option>
+
+        {% for usuario in usuarios %}
+
+        <option
+            value="{{ usuario.id }}"
+            {% if registro and registro.comprador_id == usuario.id %}
+                selected
+            {% endif %}
+        >
+            {{ usuario.nome }}
+        </option>
+
+        {% endfor %}
+
+    </select>
+
+    <br><br>
+
+    <label for="anuncio_id">
+        Anúncio:
+    </label>
+
+    <select
+        id="anuncio_id"
+        name="anuncio_id"
+        required
+    >
+
+        <option value="">
+            Selecione um anúncio
+        </option>
+
+        {% for anuncio in anuncios %}
+
+        <option
+            value="{{ anuncio.id }}"
+            {% if registro and registro.anuncio_id == anuncio.id %}
+                selected
+            {% endif %}
+        >
+            {{ anuncio.titulo }}
+        </option>
+
+        {% endfor %}
+
+    </select>
+
+    <br><br>
+
+    <label for="quantidade">
+        Quantidade:
+    </label>
+
+    <input
+        type="number"
+        id="quantidade"
+        name="quantidade"
+        min="1"
+        value="{{ registro.quantidade if registro else '1' }}"
+        required
+    >
+
+    <br><br>
+
+    <label for="status">
+        Status:
+    </label>
+
+    <select
+        id="status"
+        name="status"
+        required
+    >
+
+        <option value="Concluída"
+            {% if registro and registro.status == "Concluída" %}
+                selected
+            {% endif %}>
+            Concluída
+        </option>
+
+        <option value="Cancelada"
+            {% if registro and registro.status == "Cancelada" %}
+                selected
+            {% endif %}>
+            Cancelada
+        </option>
+
+        <option value="Pendente"
+            {% if registro and registro.status == "Pendente" %}
+                selected
+            {% endif %}>
+            Pendente
+        </option>
+
+    </select>
+
+    <br><br>
+
+    {% if registro %}
+
+        <label for="valor_unitario">
+            Valor unitário:
+        </label>
+
+        <input
+            type="number"
+            id="valor_unitario"
+            name="valor_unitario"
+            step="0.01"
+            min="0"
+            value="{{ registro.valor_unitario }}"
+            required
+        >
+
+        <br><br>
+
+    {% endif %}
+
+    <button type="submit">
+
+        {% if registro %}
+            Atualizar
+        {% else %}
+            Cadastrar
+        {% endif %}
+
+    </button>
+
+    <a href="{{ url_for('compras') }}">
+        Cancelar
+    </a>
+
+</form>
+
+{% endblock %}

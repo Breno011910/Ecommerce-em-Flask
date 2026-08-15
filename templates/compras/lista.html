@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+
+{% block title %}
+Compras
+{% endblock %}
+
+{% block content %}
+
+<h1>Compras</h1>
+
+<a class="botao"
+   href="{{ url_for('compra_novo') }}">
+    + Nova compra
+</a>
+
+<br><br>
+
+{% if registros %}
+
+<table>
+
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Comprador</th>
+            <th>Anúncio</th>
+            <th>Quantidade</th>
+            <th>Valor unitário</th>
+            <th>Valor total</th>
+            <th>Status</th>
+            <th>Data</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+        {% for compra in registros %}
+
+        <tr>
+
+            <td>
+                {{ compra.id }}
+            </td>
+
+            <td>
+                {{ compra.comprador.nome }}
+            </td>
+
+            <td>
+                {{ compra.anuncio.titulo }}
+            </td>
+
+            <td>
+                {{ compra.quantidade }}
+            </td>
+
+            <td>
+                R$ {{ "%.2f"|format(compra.valor_unitario) }}
+            </td>
+
+            <td>
+                R$ {{ "%.2f"|format(compra.valor_total) }}
+            </td>
+
+            <td>
+                {{ compra.status }}
+            </td>
+
+            <td>
+                {{ compra.data_compra.strftime('%d/%m/%Y %H:%M') }}
+            </td>
+
+            <td>
+
+                <a href="{{ url_for('compra_editar', id=compra.id) }}">
+                    Editar
+                </a>
+
+                |
+
+                <form
+                    action="{{ url_for('compra_excluir', id=compra.id) }}"
+                    method="POST"
+                    style="display:inline;">
+
+                    <button
+                        type="submit"
+                        onclick="return confirm('Deseja realmente excluir esta compra?');">
+
+                        Excluir
+
+                    </button>
+
+                </form>
+
+            </td>
+
+        </tr>
+
+        {% endfor %}
+
+    </tbody>
+
+</table>
+
+{% else %}
+
+<p>
+    Nenhuma compra cadastrada.
+</p>
+
+{% endif %}
+
+{% endblock %}

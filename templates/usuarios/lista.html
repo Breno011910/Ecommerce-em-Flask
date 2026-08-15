@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+
+{% block title %}
+Usuários
+{% endblock %}
+
+{% block content %}
+
+<h1>Usuários</h1>
+
+<a class="botao"
+   href="{{ url_for('usuario_novo') }}">
+    + Novo usuário
+</a>
+
+<br><br>
+
+{% if registros %}
+
+<table>
+
+    <thead>
+
+        <tr>
+
+            <th>ID</th>
+            <th>Nome</th>
+            <th>E-mail</th>
+            <th>Ações</th>
+
+        </tr>
+
+    </thead>
+
+    <tbody>
+
+        {% for usuario in registros %}
+
+        <tr>
+
+            <td>
+                {{ usuario.id }}
+            </td>
+
+            <td>
+                {{ usuario.nome }}
+            </td>
+
+            <td>
+                {{ usuario.email }}
+            </td>
+
+            <td>
+
+                <a
+                    href="{{ url_for('usuario_editar', id=usuario.id) }}">
+
+                    Editar
+
+                </a>
+
+                |
+
+                <form
+                    action="{{ url_for('usuario_excluir', id=usuario.id) }}"
+                    method="POST"
+                    style="display:inline;">
+
+                    <button
+                        type="submit"
+                        onclick="return confirm('Deseja realmente excluir este usuário?');">
+
+                        Excluir
+
+                    </button>
+
+                </form>
+
+            </td>
+
+        </tr>
+
+        {% endfor %}
+
+    </tbody>
+
+</table>
+
+{% else %}
+
+<p>
+    Nenhum usuário cadastrado.
+</p>
+
+{% endif %}
+
+{% endblock %}

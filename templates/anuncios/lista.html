@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+
+{% block title %}
+Anúncios
+{% endblock %}
+
+{% block content %}
+
+<h1>Anúncios</h1>
+
+<a class="botao"
+   href="{{ url_for('anuncio_novo') }}">
+    + Novo anúncio
+</a>
+
+<br><br>
+
+{% if registros %}
+
+<table>
+
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Título</th>
+            <th>Descrição</th>
+            <th>Preço</th>
+            <th>Quantidade</th>
+            <th>Status</th>
+            <th>Usuário</th>
+            <th>Categoria</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+        {% for anuncio in registros %}
+
+        <tr>
+
+            <td>
+                {{ anuncio.id }}
+            </td>
+
+            <td>
+                {{ anuncio.titulo }}
+            </td>
+
+            <td>
+                {{ anuncio.descricao }}
+            </td>
+
+            <td>
+                R$ {{ "%.2f"|format(anuncio.preco) }}
+            </td>
+
+            <td>
+                {{ anuncio.quantidade }}
+            </td>
+
+            <td>
+                {{ anuncio.status }}
+            </td>
+
+            <td>
+                {{ anuncio.proprietario.nome }}
+            </td>
+
+            <td>
+                {{ anuncio.categoria.nome }}
+            </td>
+
+            <td>
+
+                <a href="{{ url_for('anuncio_detalhes', id=anuncio.id) }}">
+                    Ver anúncio
+                </a>
+
+                |
+
+                <a href="{{ url_for('anuncio_editar', id=anuncio.id) }}">
+                    Editar
+                </a>
+
+                |
+
+                <form
+                    action="{{ url_for('anuncio_excluir', id=anuncio.id) }}"
+                    method="POST"
+                    style="display:inline;">
+
+                    <button
+                        type="submit"
+                        onclick="return confirm('Deseja realmente excluir este anúncio?');">
+
+                        Excluir
+
+                    </button>
+
+                </form>
+
+            </td>
+
+        </tr>
+
+        {% endfor %}
+
+    </tbody>
+
+</table>
+
+{% else %}
+
+<p>
+    Nenhum anúncio cadastrado.
+</p>
+
+{% endif %}
+
+{% endblock %}

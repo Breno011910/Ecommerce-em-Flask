@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+
+{% block title %}
+{{ anuncio.titulo }}
+{% endblock %}
+
+{% block content %}
+
+<h1>{{ anuncio.titulo }}</h1>
+
+<p>
+    <strong>Descrição:</strong>
+    {{ anuncio.descricao }}
+</p>
+
+<p>
+    <strong>Preço:</strong>
+    R$ {{ "%.2f"|format(anuncio.preco) }}
+</p>
+
+<p>
+    <strong>Quantidade disponível:</strong>
+    {{ anuncio.quantidade }}
+</p>
+
+<p>
+    <strong>Status:</strong>
+    {{ anuncio.status }}
+</p>
+
+<p>
+    <strong>Categoria:</strong>
+    {{ anuncio.categoria.nome }}
+</p>
+
+<p>
+    <strong>Vendedor:</strong>
+    {{ anuncio.proprietario.nome }}
+</p>
+
+<hr>
+
+<h2>Perguntas e respostas</h2>
+
+{% if anuncio.perguntas %}
+
+    {% for pergunta in anuncio.perguntas %}
+
+        <div>
+
+            <p>
+                <strong>{{ pergunta.autor.nome }} perguntou:</strong>
+            </p>
+
+            <p>
+                {{ pergunta.texto }}
+            </p>
+
+            {% if pergunta.resposta %}
+
+                <p>
+                    <strong>Resposta do proprietário:</strong>
+                </p>
+
+                <p>
+                    {{ pergunta.resposta }}
+                </p>
+
+            {% else %}
+
+                <p>
+                    <em>Ainda não respondida.</em>
+                </p>
+
+            {% endif %}
+
+        </div>
+
+        <hr>
+
+    {% endfor %}
+
+{% else %}
+
+    <p>
+        Este anúncio ainda não possui perguntas.
+    </p>
+
+{% endif %}
+
+<br>
+
+<a href="{{ url_for('anuncios') }}">
+    Voltar para anúncios
+</a>
+
+{% endblock %}

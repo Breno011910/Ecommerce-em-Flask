@@ -1,0 +1,133 @@
+{% extends "base.html" %}
+
+{% block title %}
+Perguntas
+{% endblock %}
+
+{% block content %}
+
+<h1>Perguntas</h1>
+
+<a class="botao"
+   href="{{ url_for('pergunta_novo') }}">
+    + Nova pergunta
+</a>
+
+<br><br>
+
+{% if registros %}
+
+<table>
+
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Pergunta</th>
+            <th>Resposta</th>
+            <th>Usuário</th>
+            <th>Anúncio</th>
+            <th>Data</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+        {% for pergunta in registros %}
+
+        <tr>
+
+            <td>
+                {{ pergunta.id }}
+            </td>
+
+            <td>
+                {{ pergunta.texto }}
+            </td>
+
+            <td>
+
+                {% if pergunta.resposta %}
+
+                    {{ pergunta.resposta }}
+
+                {% else %}
+
+                    <span>
+                        Sem resposta
+                    </span>
+
+                {% endif %}
+
+            </td>
+
+            <td>
+                {{ pergunta.autor.nome }}
+            </td>
+
+            <td>
+                {{ pergunta.anuncio.titulo }}
+            </td>
+
+            <td>
+                {{ pergunta.data_pergunta.strftime('%d/%m/%Y %H:%M') }}
+            </td>
+
+            <td>
+
+                <a href="{{ url_for('pergunta_editar', id=pergunta.id) }}">
+                    Editar
+                </a>
+
+                |
+
+                {% if pergunta.resposta %}
+
+                    <span>
+                        Respondida
+                    </span>
+
+                {% else %}
+
+                    <a href="{{ url_for('pergunta_responder', id=pergunta.id) }}">
+                        Responder
+                    </a>
+
+                {% endif %}
+
+                |
+
+                <form
+                    action="{{ url_for('pergunta_excluir', id=pergunta.id) }}"
+                    method="POST"
+                    style="display:inline;">
+
+                    <button
+                        type="submit"
+                        onclick="return confirm('Deseja realmente excluir esta pergunta?');">
+
+                        Excluir
+
+                    </button>
+
+                </form>
+
+            </td>
+
+        </tr>
+
+        {% endfor %}
+
+    </tbody>
+
+</table>
+
+{% else %}
+
+<p>
+    Nenhuma pergunta cadastrada.
+</p>
+
+{% endif %}
+
+{% endblock %}

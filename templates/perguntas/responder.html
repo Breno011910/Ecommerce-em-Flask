@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}
+Responder Pergunta
+{% endblock %}
+
+{% block content %}
+
+<h1>Responder Pergunta</h1>
+
+<p>
+    <strong>Usuário:</strong>
+    {{ registro.autor.nome }}
+</p>
+
+<p>
+    <strong>Anúncio:</strong>
+    {{ registro.anuncio.titulo }}
+</p>
+
+<p>
+    <strong>Pergunta:</strong>
+    {{ registro.texto }}
+</p>
+
+<form method="POST">
+
+    <label for="resposta">
+        Resposta:
+    </label>
+
+    <br>
+
+    <textarea
+        id="resposta"
+        name="resposta"
+        rows="5"
+        required
+    >{{ registro.resposta or '' }}</textarea>
+
+    <br><br>
+
+    <button type="submit">
+        Enviar resposta
+    </button>
+
+    <a href="{{ url_for('perguntas') }}">
+        Cancelar
+    </a>
+
+</form>
+
+{% endblock %}

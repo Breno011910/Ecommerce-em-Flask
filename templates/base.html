@@ -1,41 +1,119 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}E-commerce{% endblock %}</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+        {% block title %}
+        E-commerce
+        {% endblock %}
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}"
+    >
+
 </head>
+
 <body>
+
     <header>
-        <nav class="navbar">
-            <a class="logo" href="{{ url_for('index') }}">E-commerce</a>
 
-            <div class="menu">
-                <a href="{{ url_for('anuncios') }}">Anúncios</a>
-                <a href="{{ url_for('categorias') }}">Categorias</a>
-                <a href="{{ url_for('perguntas') }}">Perguntas</a>
-                <a href="{{ url_for('compras') }}">Compras</a>
-                <a href="{{ url_for('favoritos') }}">Favoritos</a>
-                <a href="{{ url_for('usuarios') }}">Usuários</a>
+        <div class="container">
 
-                <div class="dropdown">
-                    <span>Relatórios ▾</span>
-                    <div class="dropdown-content">
-                        <a href="{{ url_for('relatorio_vendas') }}">Vendas</a>
-                        <a href="{{ url_for('relatorio_compras') }}">Compras</a>
-                    </div>
-                </div>
+            <div class="logo">
+                E-commerce
             </div>
-        </nav>
+
+            <nav>
+
+                <a href="{{ url_for('index') }}">
+                    Início
+                </a>
+
+                <a href="{{ url_for('usuarios') }}">
+                    Usuários
+                </a>
+
+                <a href="{{ url_for('categorias') }}">
+                    Categorias
+                </a>
+
+                <a href="{{ url_for('anuncios') }}">
+                    Anúncios
+                </a>
+
+                <a href="{{ url_for('perguntas') }}">
+                    Perguntas
+                </a>
+
+                <a href="{{ url_for('compras') }}">
+                    Compras
+                </a>
+
+                <a href="{{ url_for('favoritos') }}">
+                    Favoritos
+                </a>
+
+                <a href="{{ url_for('relatorio_vendas') }}">
+                    Vendas
+                </a>
+
+                <a href="{{ url_for('relatorio_compras') }}">
+                    Relatório de compras
+                </a>
+
+            </nav>
+
+        </div>
+
     </header>
 
+
     <main class="container">
-        {% block content %}{% endblock %}
+
+        {% with mensagens = get_flashed_messages(with_categories=true) %}
+
+            {% if mensagens %}
+
+                {% for categoria, mensagem in mensagens %}
+
+                    <div class="alerta {{ categoria }}">
+                        {{ mensagem }}
+                    </div>
+
+                {% endfor %}
+
+            {% endif %}
+
+        {% endwith %}
+
+
+        {% block content %}
+
+        {% endblock %}
+
     </main>
 
+
     <footer>
-        <p>Projeto acadêmico - Plataforma de E-commerce</p>
+
+        <div class="container">
+
+            <p>
+                Sistema E-commerce
+            </p>
+
+        </div>
+
     </footer>
+
 </body>
+
 </html>

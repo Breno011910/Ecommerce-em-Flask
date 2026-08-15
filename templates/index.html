@@ -1,27 +1,130 @@
 {% extends "base.html" %}
-{% block title %}Início - E-commerce{% endblock %}
+
+{% block title %}
+Início
+{% endblock %}
+
 {% block content %}
-<section class="hero">
-    <h1>Plataforma de E-commerce</h1>
-    <p>Sistema inicial desenvolvido em Flask.</p>
+
+<section class="inicio">
+
+    <div class="cabecalho-inicio">
+
+        <h1>
+            Sistema E-commerce
+        </h1>
+
+        <p>
+            Gerencie usuários, anúncios, categorias, compras e favoritos.
+        </p>
+
+    </div>
+
+
+    <div class="cards">
+
+        <div class="card">
+
+            <h2>
+                {{ total_usuarios }}
+            </h2>
+
+            <p>
+                Usuários
+            </p>
+
+            <a href="{{ url_for('usuarios') }}">
+                Acessar
+            </a>
+
+        </div>
+
+
+        <div class="card">
+
+            <h2>
+                {{ total_categorias }}
+            </h2>
+
+            <p>
+                Categorias
+            </p>
+
+            <a href="{{ url_for('categorias') }}">
+                Acessar
+            </a>
+
+        </div>
+
+
+        <div class="card">
+
+            <h2>
+                {{ total_anuncios }}
+            </h2>
+
+            <p>
+                Anúncios
+            </p>
+
+            <a href="{{ url_for('anuncios') }}">
+                Acessar
+            </a>
+
+        </div>
+
+
+        <div class="card">
+
+            <h2>
+                {{ total_compras }}
+            </h2>
+
+            <p>
+                Compras
+            </p>
+
+            <a href="{{ url_for('compras') }}">
+                Acessar
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <div class="atalhos">
+
+        <h2>
+            Acesso rápido
+        </h2>
+
+        <div class="atalhos-links">
+
+            <a href="{{ url_for('usuario_novo') }}">
+                + Novo usuário
+            </a>
+
+            <a href="{{ url_for('categoria_novo') }}">
+                + Nova categoria
+            </a>
+
+            <a href="{{ url_for('anuncio_novo') }}">
+                + Novo anúncio
+            </a>
+
+            <a href="{{ url_for('compra_novo') }}">
+                + Nova compra
+            </a>
+
+            <a href="{{ url_for('favorito_novo') }}">
+                + Novo favorito
+            </a>
+
+        </div>
+
+    </div>
+
 </section>
 
-<div class="cards">
-    <a class="card" href="{{ url_for('anuncios') }}">
-        <h2>Anúncios</h2>
-        <p>Consultar e administrar anúncios.</p>
-    </a>
-    <a class="card" href="{{ url_for('compras') }}">
-        <h2>Compras</h2>
-        <p>Consultar compras realizadas.</p>
-    </a>
-    <a class="card" href="{{ url_for('favoritos') }}">
-        <h2>Favoritos</h2>
-        <p>Acessar anúncios favoritos.</p>
-    </a>
-    <a class="card" href="{{ url_for('relatorio_vendas') }}">
-        <h2>Relatório de vendas</h2>
-        <p>Consultar vendas realizadas.</p>
-    </a>
-</div>
 {% endblock %}

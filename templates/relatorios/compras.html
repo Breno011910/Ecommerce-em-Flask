@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+
+{% block title %}
+Relatório de Compras
+{% endblock %}
+
+{% block content %}
+
+<h1>Relatório de Compras</h1>
+
+<p>
+    Relatório das compras realizadas pelos usuários.
+</p>
+
+<br>
+
+{% if registros %}
+
+<table>
+
+    <thead>
+
+        <tr>
+            <th>ID</th>
+            <th>Comprador</th>
+            <th>Produto</th>
+            <th>Quantidade</th>
+            <th>Valor unitário</th>
+            <th>Valor total</th>
+            <th>Status</th>
+            <th>Data</th>
+        </tr>
+
+    </thead>
+
+    <tbody>
+
+        {% for compra in registros %}
+
+        <tr>
+
+            <td>
+                {{ compra.id }}
+            </td>
+
+            <td>
+                {{ compra.comprador.nome }}
+            </td>
+
+            <td>
+                {{ compra.anuncio.titulo }}
+            </td>
+
+            <td>
+                {{ compra.quantidade }}
+            </td>
+
+            <td>
+                R$ {{ "%.2f"|format(compra.valor_unitario) }}
+            </td>
+
+            <td>
+                R$ {{ "%.2f"|format(compra.valor_total) }}
+            </td>
+
+            <td>
+                {{ compra.status }}
+            </td>
+
+            <td>
+                {{ compra.data_compra.strftime('%d/%m/%Y %H:%M') }}
+            </td>
+
+        </tr>
+
+        {% endfor %}
+
+    </tbody>
+
+</table>
+
+{% else %}
+
+<p>
+    Nenhuma compra registrada.
+</p>
+
+{% endif %}
+
+{% endblock %}

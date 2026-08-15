@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+
+{% block title %}
+Categorias
+{% endblock %}
+
+{% block content %}
+
+<h1>Categorias</h1>
+
+<a class="botao"
+   href="{{ url_for('categoria_novo') }}">
+    + Nova categoria
+</a>
+
+<br><br>
+
+{% if registros %}
+
+<table>
+
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Descrição</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+        {% for categoria in registros %}
+
+        <tr>
+
+            <td>
+                {{ categoria.id }}
+            </td>
+
+            <td>
+                {{ categoria.nome }}
+            </td>
+
+            <td>
+                {{ categoria.descricao or "-" }}
+            </td>
+
+            <td>
+
+                <a href="{{ url_for('categoria_editar', id=categoria.id) }}">
+                    Editar
+                </a>
+
+                |
+
+                <form
+                    action="{{ url_for('categoria_excluir', id=categoria.id) }}"
+                    method="POST"
+                    style="display:inline;">
+
+                    <button
+                        type="submit"
+                        onclick="return confirm('Deseja realmente excluir esta categoria?');">
+
+                        Excluir
+
+                    </button>
+
+                </form>
+
+            </td>
+
+        </tr>
+
+        {% endfor %}
+
+    </tbody>
+
+</table>
+
+{% else %}
+
+<p>
+    Nenhuma categoria cadastrada.
+</p>
+
+{% endif %}
+
+{% endblock %}

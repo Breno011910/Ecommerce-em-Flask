@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block title %}
+
+{% if registro %}
+    Editar Categoria
+{% else %}
+    Nova Categoria
+{% endif %}
+
+{% endblock %}
+
+{% block content %}
+
+<h1>
+
+    {% if registro %}
+        Editar Categoria
+    {% else %}
+        Nova Categoria
+    {% endif %}
+
+</h1>
+
+<form method="POST">
+
+    <label for="nome">
+        Nome:
+    </label>
+
+    <input
+        type="text"
+        id="nome"
+        name="nome"
+        value="{{ registro.nome if registro else '' }}"
+        required
+    >
+
+    <br><br>
+
+    <label for="descricao">
+        Descrição:
+    </label>
+
+    <textarea
+        id="descricao"
+        name="descricao"
+        rows="4"
+    >{{ registro.descricao if registro else '' }}</textarea>
+
+    <br><br>
+
+    <button type="submit">
+
+        {% if registro %}
+            Atualizar
+        {% else %}
+            Cadastrar
+        {% endif %}
+
+    </button>
+
+    <a href="{{ url_for('categorias') }}">
+        Cancelar
+    </a>
+
+</form>
+
+{% endblock %}

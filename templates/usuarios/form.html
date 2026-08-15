@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>
+        {% if registro %}
+            Editar Usuário
+        {% else %}
+            Novo Usuário
+        {% endif %}
+    </title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>
+            {% if registro %}
+                Editar Usuário
+            {% else %}
+                Cadastrar Usuário
+            {% endif %}
+        </h1>
+
+        <form method="POST">
+
+            <div class="form-group">
+                <label for="nome">Nome</label>
+
+                <input
+                    type="text"
+                    id="nome"
+                    name="nome"
+                    value="{{ registro.nome if registro else '' }}"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="email">E-mail</label>
+
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    value="{{ registro.email if registro else '' }}"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="senha">Senha</label>
+
+                <input
+                    type="password"
+                    id="senha"
+                    name="senha"
+                    value="{{ registro.senha if registro else '' }}"
+                    required
+                >
+            </div>
+
+            <button type="submit">
+                {% if registro %}
+                    Atualizar
+                {% else %}
+                    Cadastrar
+                {% endif %}
+            </button>
+
+            <a href="{{ url_for('usuarios') }}">
+                Cancelar
+            </a>
+
+        </form>
+
+    </div>
+
+</body>
+</html>

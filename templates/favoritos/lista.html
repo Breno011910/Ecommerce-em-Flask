@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+{% block title %}
+Favoritos
+{% endblock %}
+
+{% block content %}
+
+<h1>Favoritos</h1>
+
+<a class="botao"
+   href="{{ url_for('favorito_novo') }}">
+    + Novo favorito
+</a>
+
+<br><br>
+
+{% if registros %}
+
+<table>
+
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Usuário</th>
+            <th>Anúncio</th>
+            <th>Data</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+        {% for favorito in registros %}
+
+        <tr>
+
+            <td>
+                {{ favorito.id }}
+            </td>
+
+            <td>
+                {{ favorito.usuario.nome }}
+            </td>
+
+            <td>
+                {{ favorito.anuncio.titulo }}
+            </td>
+
+            <td>
+                {{ favorito.data_favorito.strftime('%d/%m/%Y %H:%M') }}
+            </td>
+
+            <td>
+
+                <a href="{{ url_for('favorito_editar', id=favorito.id) }}">
+                    Editar
+                </a>
+
+                |
+
+                <form
+                    action="{{ url_for('favorito_excluir', id=favorito.id) }}"
+                    method="POST"
+                    style="display:inline;">
+
+                    <button
+                        type="submit"
+                        onclick="return confirm('Deseja realmente excluir este favorito?');">
+
+                        Excluir
+
+                    </button>
+
+                </form>
+
+            </td>
+
+        </tr>
+
+        {% endfor %}
+
+    </tbody>
+
+</table>
+
+{% else %}
+
+<p>
+    Nenhum favorito cadastrado.
+</p>
+
+{% endif %}
+
+{% endblock %}
