@@ -1,130 +1,318 @@
 {% extends "base.html" %}
 
 {% block title %}
-Início
+Início - E-commerce
 {% endblock %}
 
 {% block content %}
 
-<section class="inicio">
+<div class="container">
 
-    <div class="cabecalho-inicio">
+    <!-- HERO -->
 
-        <h1>
-            Sistema E-commerce
-        </h1>
+    <div class="hero-inicio shadow-sm">
 
-        <p>
-            Gerencie usuários, anúncios, categorias, compras e favoritos.
-        </p>
+        <div>
 
-    </div>
+            <span class="badge bg-primary mb-3">
+                PAINEL DO SISTEMA
+            </span>
 
-
-    <div class="cards">
-
-        <div class="card">
-
-            <h2>
-                {{ total_usuarios }}
-            </h2>
+            <h1>
+                Sistema E-commerce
+            </h1>
 
             <p>
-                Usuários
+                Gerencie usuários, anúncios, compras, perguntas e favoritos
+                em um único lugar.
             </p>
-
-            <a href="{{ url_for('usuarios') }}">
-                Acessar
-            </a>
-
-        </div>
-
-
-        <div class="card">
-
-            <h2>
-                {{ total_categorias }}
-            </h2>
-
-            <p>
-                Categorias
-            </p>
-
-            <a href="{{ url_for('categorias') }}">
-                Acessar
-            </a>
-
-        </div>
-
-
-        <div class="card">
-
-            <h2>
-                {{ total_anuncios }}
-            </h2>
-
-            <p>
-                Anúncios
-            </p>
-
-            <a href="{{ url_for('anuncios') }}">
-                Acessar
-            </a>
-
-        </div>
-
-
-        <div class="card">
-
-            <h2>
-                {{ total_compras }}
-            </h2>
-
-            <p>
-                Compras
-            </p>
-
-            <a href="{{ url_for('compras') }}">
-                Acessar
-            </a>
 
         </div>
 
     </div>
 
 
-    <div class="atalhos">
+    <!-- RESUMO -->
+
+    <div class="row g-4 mb-4">
+
+        <div class="col-md-6 col-lg-3">
+
+            <div class="dashboard-card">
+
+                <div class="card-icon">
+                    👥
+                </div>
+
+                <div>
+
+                    <span class="card-label">
+                        Usuários
+                    </span>
+
+                    <strong>
+                        {{ total_usuarios }}
+                    </strong>
+
+                    <small>
+                        cadastrados
+                    </small>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="col-md-6 col-lg-3">
+
+            <div class="dashboard-card">
+
+                <div class="card-icon">
+                    📂
+                </div>
+
+                <div>
+
+                    <span class="card-label">
+                        Categorias
+                    </span>
+
+                    <strong>
+                        {{ total_categorias }}
+                    </strong>
+
+                    <small>
+                        disponíveis
+                    </small>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="col-md-6 col-lg-3">
+
+            <div class="dashboard-card">
+
+                <div class="card-icon">
+                    🛍️
+                </div>
+
+                <div>
+
+                    <span class="card-label">
+                        Anúncios
+                    </span>
+
+                    <strong>
+                        {{ total_anuncios }}
+                    </strong>
+
+                    <small>
+                        cadastrados
+                    </small>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="col-md-6 col-lg-3">
+
+            <div class="dashboard-card">
+
+                <div class="card-icon">
+                    🛒
+                </div>
+
+                <div>
+
+                    <span class="card-label">
+                        Compras
+                    </span>
+
+                    <strong>
+                        {{ total_compras }}
+                    </strong>
+
+                    <small>
+                        registradas
+                    </small>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    {% if current_user.is_authenticated %}
+
+    <!-- ACESSO RÁPIDO -->
+
+    <div class="quick-panel shadow-sm">
+
+        <div class="quick-header">
+
+            <div>
+
+                <h2>
+                    Acesso rápido
+                </h2>
+
+                <p>
+                    Crie novos registros diretamente pelo painel.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="quick-actions">
+
+            <a
+                href="{{ url_for('anuncio_novo') }}"
+                class="quick-button primary"
+            >
+                <span>＋</span>
+                Novo anúncio
+            </a>
+
+            <a
+                href="{{ url_for('usuario_novo') }}"
+                class="quick-button"
+            >
+                <span>＋</span>
+                Novo usuário
+            </a>
+
+            <a
+                href="{{ url_for('compra_novo') }}"
+                class="quick-button"
+            >
+                <span>＋</span>
+                Nova compra
+            </a>
+
+            <a
+                href="{{ url_for('pergunta_novo') }}"
+                class="quick-button"
+            >
+                <span>＋</span>
+                Nova pergunta
+            </a>
+
+            <a
+                href="{{ url_for('favorito_novo') }}"
+                class="quick-button"
+            >
+                <span>＋</span>
+                Novo favorito
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- ACESSO ÀS ÁREAS -->
+
+    <div class="areas-panel shadow-sm">
 
         <h2>
-            Acesso rápido
+            Áreas do sistema
         </h2>
 
-        <div class="atalhos-links">
+        <p>
+            Acesse rapidamente as principais funcionalidades.
+        </p>
 
-            <a href="{{ url_for('usuario_novo') }}">
-                + Novo usuário
+        <div class="areas-grid">
+
+            <a href="{{ url_for('usuarios') }}">
+                <span>👥</span>
+                <div>
+                    <strong>Usuários</strong>
+                    <small>Gerenciar usuários</small>
+                </div>
             </a>
 
-            <a href="{{ url_for('categoria_novo') }}">
-                + Nova categoria
+            <a href="{{ url_for('anuncios') }}">
+                <span>🛍️</span>
+                <div>
+                    <strong>Anúncios</strong>
+                    <small>Gerenciar produtos</small>
+                </div>
             </a>
 
-            <a href="{{ url_for('anuncio_novo') }}">
-                + Novo anúncio
+            <a href="{{ url_for('perguntas') }}">
+                <span>💬</span>
+                <div>
+                    <strong>Perguntas</strong>
+                    <small>Visualizar perguntas</small>
+                </div>
             </a>
 
-            <a href="{{ url_for('compra_novo') }}">
-                + Nova compra
+            <a href="{{ url_for('compras') }}">
+                <span>🛒</span>
+                <div>
+                    <strong>Compras</strong>
+                    <small>Gerenciar compras</small>
+                </div>
             </a>
 
-            <a href="{{ url_for('favorito_novo') }}">
-                + Novo favorito
+            <a href="{{ url_for('favoritos') }}">
+                <span>⭐</span>
+                <div>
+                    <strong>Favoritos</strong>
+                    <small>Visualizar favoritos</small>
+                </div>
+            </a>
+
+            <a href="{{ url_for('relatorio_vendas') }}">
+                <span>📊</span>
+                <div>
+                    <strong>Relatórios</strong>
+                    <small>Consultar vendas</small>
+                </div>
             </a>
 
         </div>
 
     </div>
 
-</section>
+    {% else %}
+
+    <div class="login-panel shadow-sm text-center">
+
+        <h2>
+            Acesse sua conta
+        </h2>
+
+        <p>
+            Faça login para utilizar todas as funcionalidades do sistema.
+        </p>
+
+        <a
+            href="{{ url_for('login') }}"
+            class="btn btn-primary px-4"
+        >
+            Entrar no sistema
+        </a>
+
+    </div>
+
+    {% endif %}
+
+</div>
 
 {% endblock %}

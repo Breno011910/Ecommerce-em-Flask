@@ -1,89 +1,158 @@
 {% extends "base.html" %}
 
 {% block title %}
-Relatório de Compras
+Relatório de compras
 {% endblock %}
 
 {% block content %}
 
-<h1>Relatório de Compras</h1>
+<div class="mb-4">
 
-<p>
-    Relatório das compras realizadas pelos usuários.
-</p>
+    <h1 class="mb-1">
+        Relatório de compras
+    </h1>
 
-<br>
+    <p class="text-muted mb-0">
+        Visualização das compras realizadas pelos usuários.
+    </p>
+
+</div>
+
 
 {% if registros %}
 
-<table>
+<div class="card shadow-sm border-0">
 
-    <thead>
+    <div class="card-body p-0">
 
-        <tr>
-            <th>ID</th>
-            <th>Comprador</th>
-            <th>Produto</th>
-            <th>Quantidade</th>
-            <th>Valor unitário</th>
-            <th>Valor total</th>
-            <th>Status</th>
-            <th>Data</th>
-        </tr>
+        <div class="table-responsive">
 
-    </thead>
+            <table class="table table-hover align-middle mb-0">
 
-    <tbody>
+                <thead class="table-dark">
 
-        {% for compra in registros %}
+                    <tr>
 
-        <tr>
+                        <th>ID</th>
 
-            <td>
-                {{ compra.id }}
-            </td>
+                        <th>Comprador</th>
 
-            <td>
-                {{ compra.comprador.nome }}
-            </td>
+                        <th>Anúncio</th>
 
-            <td>
-                {{ compra.anuncio.titulo }}
-            </td>
+                        <th>Quantidade</th>
 
-            <td>
-                {{ compra.quantidade }}
-            </td>
+                        <th>Valor unitário</th>
 
-            <td>
-                R$ {{ "%.2f"|format(compra.valor_unitario) }}
-            </td>
+                        <th>Valor total</th>
 
-            <td>
-                R$ {{ "%.2f"|format(compra.valor_total) }}
-            </td>
+                        <th>Status</th>
 
-            <td>
-                {{ compra.status }}
-            </td>
+                        <th>Data</th>
 
-            <td>
-                {{ compra.data_compra.strftime('%d/%m/%Y %H:%M') }}
-            </td>
+                    </tr>
 
-        </tr>
+                </thead>
 
-        {% endfor %}
 
-    </tbody>
+                <tbody>
 
-</table>
+                    {% for compra in registros %}
+
+                    <tr>
+
+                        <td>
+                            {{ compra.id }}
+                        </td>
+
+
+                        <td class="fw-semibold">
+
+                            {{ compra.comprador.nome }}
+
+                        </td>
+
+
+                        <td>
+
+                            {{ compra.anuncio.titulo }}
+
+                        </td>
+
+
+                        <td>
+
+                            {{ compra.quantidade }}
+
+                        </td>
+
+
+                        <td class="text-nowrap">
+
+                            R$ {{ "%.2f"|format(compra.valor_unitario) }}
+
+                        </td>
+
+
+                        <td class="text-nowrap fw-semibold">
+
+                            R$ {{ "%.2f"|format(compra.valor_total) }}
+
+                        </td>
+
+
+                        <td>
+
+                            {% if compra.status == "Concluída" %}
+
+                                <span class="badge text-bg-success">
+                                    Concluída
+                                </span>
+
+                            {% elif compra.status == "Cancelada" %}
+
+                                <span class="badge text-bg-danger">
+                                    Cancelada
+                                </span>
+
+                            {% else %}
+
+                                <span class="badge text-bg-secondary">
+                                    {{ compra.status }}
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+
+
+                        <td class="text-nowrap">
+
+                            {{ compra.data_compra.strftime("%d/%m/%Y %H:%M") }}
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
 
 {% else %}
 
-<p>
+<div class="alert alert-secondary">
+
     Nenhuma compra registrada.
-</p>
+
+</div>
 
 {% endif %}
 

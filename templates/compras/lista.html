@@ -6,109 +6,181 @@ Compras
 
 {% block content %}
 
-<h1>Compras</h1>
+<div class="d-flex justify-content-between align-items-center mb-4">
 
-<a class="botao"
-   href="{{ url_for('compra_novo') }}">
-    + Nova compra
-</a>
+    <div>
+        <h1 class="mb-1">Compras</h1>
 
-<br><br>
+        <p class="text-muted mb-0">
+            Compras realizadas no sistema
+        </p>
+    </div>
+
+    <a
+        class="btn btn-primary"
+        href="{{ url_for('compra_novo') }}">
+
+        + Nova compra
+
+    </a>
+
+</div>
+
 
 {% if registros %}
 
-<table>
+<div class="card shadow-sm border-0">
 
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Comprador</th>
-            <th>Anúncio</th>
-            <th>Quantidade</th>
-            <th>Valor unitário</th>
-            <th>Valor total</th>
-            <th>Status</th>
-            <th>Data</th>
-            <th>Ações</th>
-        </tr>
-    </thead>
+    <div class="card-body p-0">
 
-    <tbody>
+        <div class="table-responsive">
 
-        {% for compra in registros %}
+            <table class="table table-hover align-middle mb-0">
 
-        <tr>
+                <thead class="table-dark">
 
-            <td>
-                {{ compra.id }}
-            </td>
+                    <tr>
 
-            <td>
-                {{ compra.comprador.nome }}
-            </td>
+                        <th>ID</th>
 
-            <td>
-                {{ compra.anuncio.titulo }}
-            </td>
+                        <th>Comprador</th>
 
-            <td>
-                {{ compra.quantidade }}
-            </td>
+                        <th>Anúncio</th>
 
-            <td>
-                R$ {{ "%.2f"|format(compra.valor_unitario) }}
-            </td>
+                        <th>Quantidade</th>
 
-            <td>
-                R$ {{ "%.2f"|format(compra.valor_total) }}
-            </td>
+                        <th>Valor unitário</th>
 
-            <td>
-                {{ compra.status }}
-            </td>
+                        <th>Valor total</th>
 
-            <td>
-                {{ compra.data_compra.strftime('%d/%m/%Y %H:%M') }}
-            </td>
+                        <th>Status</th>
 
-            <td>
+                        <th>Data</th>
 
-                <a href="{{ url_for('compra_editar', id=compra.id) }}">
-                    Editar
-                </a>
+                        <th class="text-end">
+                            Ações
+                        </th>
 
-                |
+                    </tr>
 
-                <form
-                    action="{{ url_for('compra_excluir', id=compra.id) }}"
-                    method="POST"
-                    style="display:inline;">
+                </thead>
 
-                    <button
-                        type="submit"
-                        onclick="return confirm('Deseja realmente excluir esta compra?');">
 
-                        Excluir
+                <tbody>
 
-                    </button>
+                    {% for compra in registros %}
 
-                </form>
+                    <tr>
 
-            </td>
+                        <td>
+                            {{ compra.id }}
+                        </td>
 
-        </tr>
+                        <td class="fw-semibold">
+                            {{ compra.comprador.nome }}
+                        </td>
 
-        {% endfor %}
+                        <td>
+                            {{ compra.anuncio.titulo }}
+                        </td>
 
-    </tbody>
+                        <td>
+                            {{ compra.quantidade }}
+                        </td>
 
-</table>
+                        <td class="text-nowrap">
+
+                            R$ {{ "%.2f"|format(compra.valor_unitario) }}
+
+                        </td>
+
+                        <td class="text-nowrap fw-semibold">
+
+                            R$ {{ "%.2f"|format(compra.valor_total) }}
+
+                        </td>
+
+                        <td>
+
+                            {% if compra.status == "Concluída" %}
+
+                                <span class="badge text-bg-success">
+                                    Concluída
+                                </span>
+
+                            {% elif compra.status == "Cancelada" %}
+
+                                <span class="badge text-bg-danger">
+                                    Cancelada
+                                </span>
+
+                            {% else %}
+
+                                <span class="badge text-bg-secondary">
+                                    {{ compra.status }}
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+
+                        <td class="text-nowrap">
+
+                            {{ compra.data_compra.strftime("%d/%m/%Y %H:%M") }}
+
+                        </td>
+
+                        <td class="text-end text-nowrap">
+
+                            <a
+                                class="btn btn-sm btn-outline-primary"
+                                href="{{ url_for('compra_editar', id=compra.id) }}">
+
+                                Editar
+
+                            </a>
+
+
+                            <form
+                                action="{{ url_for('compra_excluir', id=compra.id) }}"
+                                method="POST"
+                                class="d-inline">
+
+                                <button
+                                    type="submit"
+                                    class="btn btn-sm btn-outline-danger"
+                                    onclick="return confirm('Deseja realmente excluir esta compra?');">
+
+                                    Excluir
+
+                                </button>
+
+                            </form>
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
 
 {% else %}
 
-<p>
+<div class="alert alert-secondary">
+
     Nenhuma compra cadastrada.
-</p>
+
+</div>
 
 {% endif %}
 

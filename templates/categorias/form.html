@@ -3,67 +3,119 @@
 {% block title %}
 
 {% if registro %}
-    Editar Categoria
+    Editar categoria
 {% else %}
-    Nova Categoria
+    Nova categoria
 {% endif %}
 
 {% endblock %}
 
+
 {% block content %}
 
-<h1>
+<div class="formulario">
 
-    {% if registro %}
-        Editar Categoria
-    {% else %}
-        Nova Categoria
-    {% endif %}
+    <div class="mb-4">
 
-</h1>
+        <h1>
 
-<form method="POST">
+            {% if registro %}
+                Editar categoria
+            {% else %}
+                Nova categoria
+            {% endif %}
 
-    <label for="nome">
-        Nome:
-    </label>
+        </h1>
 
-    <input
-        type="text"
-        id="nome"
-        name="nome"
-        value="{{ registro.nome if registro else '' }}"
-        required
-    >
+        <p class="text-muted mb-0">
 
-    <br><br>
+            {% if registro %}
+                Atualize os dados da categoria.
+            {% else %}
+                Preencha os dados para cadastrar uma nova categoria.
+            {% endif %}
 
-    <label for="descricao">
-        Descrição:
-    </label>
+        </p>
 
-    <textarea
-        id="descricao"
-        name="descricao"
-        rows="4"
-    >{{ registro.descricao if registro else '' }}</textarea>
+    </div>
 
-    <br><br>
 
-    <button type="submit">
+    <form method="POST">
 
-        {% if registro %}
-            Atualizar
-        {% else %}
-            Cadastrar
-        {% endif %}
+        <!-- NOME -->
 
-    </button>
+        <div class="mb-3">
 
-    <a href="{{ url_for('categorias') }}">
-        Cancelar
-    </a>
+            <label
+                for="nome"
+                class="form-label">
 
-</form>
+                Nome
+
+            </label>
+
+            <input
+                type="text"
+                class="form-control"
+                id="nome"
+                name="nome"
+                value="{{ registro.nome if registro else '' }}"
+                required>
+
+        </div>
+
+
+        <!-- DESCRIÇÃO -->
+
+        <div class="mb-4">
+
+            <label
+                for="descricao"
+                class="form-label">
+
+                Descrição
+
+            </label>
+
+            <textarea
+                class="form-control"
+                id="descricao"
+                name="descricao"
+                rows="4"
+                placeholder="Digite uma descrição para a categoria...">{{ registro.descricao if registro else '' }}</textarea>
+
+        </div>
+
+
+        <!-- BOTÕES -->
+
+        <div class="d-flex gap-2">
+
+            <button
+                type="submit"
+                class="btn btn-primary">
+
+                {% if registro %}
+                    Salvar alterações
+                {% else %}
+                    Cadastrar categoria
+                {% endif %}
+
+            </button>
+
+
+            <a
+                href="{{ url_for('categorias') }}"
+                class="btn btn-outline-secondary">
+
+                Cancelar
+
+            </a>
+
+        </div>
+
+    </form>
+
+</div>
 
 {% endblock %}

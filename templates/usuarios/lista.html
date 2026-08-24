@@ -6,91 +6,125 @@ Usuários
 
 {% block content %}
 
-<h1>Usuários</h1>
+<div class="d-flex justify-content-between align-items-center mb-4">
 
-<a class="botao"
-   href="{{ url_for('usuario_novo') }}">
-    + Novo usuário
-</a>
+    <div>
+        <h1 class="mb-1">Usuários</h1>
 
-<br><br>
+        <p class="text-muted mb-0">
+            Usuários cadastrados no sistema
+        </p>
+    </div>
+
+    <a
+        class="btn btn-primary"
+        href="{{ url_for('usuario_novo') }}">
+
+        + Novo usuário
+
+    </a>
+
+</div>
+
 
 {% if registros %}
 
-<table>
+<div class="card shadow-sm border-0">
 
-    <thead>
+    <div class="card-body p-0">
 
-        <tr>
+        <div class="table-responsive">
 
-            <th>ID</th>
-            <th>Nome</th>
-            <th>E-mail</th>
-            <th>Ações</th>
+            <table class="table table-hover align-middle mb-0">
 
-        </tr>
+                <thead class="table-dark">
 
-    </thead>
+                    <tr>
 
-    <tbody>
+                        <th>ID</th>
 
-        {% for usuario in registros %}
+                        <th>Nome</th>
 
-        <tr>
+                        <th>E-mail</th>
 
-            <td>
-                {{ usuario.id }}
-            </td>
+                        <th class="text-end">
+                            Ações
+                        </th>
 
-            <td>
-                {{ usuario.nome }}
-            </td>
+                    </tr>
 
-            <td>
-                {{ usuario.email }}
-            </td>
+                </thead>
 
-            <td>
 
-                <a
-                    href="{{ url_for('usuario_editar', id=usuario.id) }}">
+                <tbody>
 
-                    Editar
+                    {% for usuario in registros %}
 
-                </a>
+                    <tr>
 
-                |
+                        <td>
+                            {{ usuario.id }}
+                        </td>
 
-                <form
-                    action="{{ url_for('usuario_excluir', id=usuario.id) }}"
-                    method="POST"
-                    style="display:inline;">
+                        <td class="fw-semibold">
+                            {{ usuario.nome }}
+                        </td>
 
-                    <button
-                        type="submit"
-                        onclick="return confirm('Deseja realmente excluir este usuário?');">
+                        <td>
+                            {{ usuario.email }}
+                        </td>
 
-                        Excluir
+                        <td class="text-end">
 
-                    </button>
+                            <a
+                                class="btn btn-sm btn-outline-primary"
+                                href="{{ url_for('usuario_editar', id=usuario.id) }}">
 
-                </form>
+                                Editar
 
-            </td>
+                            </a>
 
-        </tr>
 
-        {% endfor %}
+                            <form
+                                action="{{ url_for('usuario_excluir', id=usuario.id) }}"
+                                method="POST"
+                                class="d-inline">
 
-    </tbody>
+                                <button
+                                    type="submit"
+                                    class="btn btn-sm btn-outline-danger"
+                                    onclick="return confirm('Deseja realmente excluir este usuário?');">
 
-</table>
+                                    Excluir
+
+                                </button>
+
+                            </form>
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
 
 {% else %}
 
-<p>
+<div class="alert alert-secondary">
+
     Nenhum usuário cadastrado.
-</p>
+
+</div>
 
 {% endif %}
 

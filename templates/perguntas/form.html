@@ -3,122 +3,178 @@
 {% block title %}
 
 {% if registro %}
-    Editar Pergunta
+    Editar pergunta
 {% else %}
-    Nova Pergunta
+    Nova pergunta
 {% endif %}
 
 {% endblock %}
 
+
 {% block content %}
 
-<h1>
+<div class="formulario">
 
-    {% if registro %}
-        Editar Pergunta
-    {% else %}
-        Nova Pergunta
-    {% endif %}
+    <div class="mb-4">
 
-</h1>
+        <h1>
 
-<form method="POST">
-
-    <label for="texto">
-        Pergunta:
-    </label>
-
-    <br>
-
-    <textarea
-        id="texto"
-        name="texto"
-        rows="4"
-        required
-    >{{ registro.texto if registro else '' }}</textarea>
-
-    <br><br>
-
-    
-
-    <br><br>
-
-    <label for="usuario_id">
-        Usuário:
-    </label>
-
-    <select
-        id="usuario_id"
-        name="usuario_id"
-        required
-    >
-
-        <option value="">
-            Selecione um usuário
-        </option>
-
-        {% for usuario in usuarios %}
-
-        <option
-            value="{{ usuario.id }}"
-            {% if registro and registro.usuario_id == usuario.id %}
-                selected
+            {% if registro %}
+                Editar pergunta
+            {% else %}
+                Nova pergunta
             {% endif %}
-        >
-            {{ usuario.nome }}
-        </option>
 
-        {% endfor %}
+        </h1>
 
-    </select>
+        <p class="text-muted mb-0">
 
-    <br><br>
-
-    <label for="anuncio_id">
-        Anúncio:
-    </label>
-
-    <select
-        id="anuncio_id"
-        name="anuncio_id"
-        required
-    >
-
-        <option value="">
-            Selecione um anúncio
-        </option>
-
-        {% for anuncio in anuncios %}
-
-        <option
-            value="{{ anuncio.id }}"
-            {% if registro and registro.anuncio_id == anuncio.id %}
-                selected
+            {% if registro %}
+                Atualize os dados da pergunta.
+            {% else %}
+                Faça uma pergunta sobre um anúncio.
             {% endif %}
-        >
-            {{ anuncio.titulo }}
-        </option>
 
-        {% endfor %}
+        </p>
 
-    </select>
+    </div>
 
-    <br><br>
 
-    <button type="submit">
+    <form method="POST">
 
-        {% if registro %}
-            Atualizar
-        {% else %}
-            Cadastrar
-        {% endif %}
+        <!-- PERGUNTA -->
 
-    </button>
+        <div class="mb-3">
 
-    <a href="{{ url_for('perguntas') }}">
-        Cancelar
-    </a>
+            <label
+                for="texto"
+                class="form-label">
 
-</form>
+                Pergunta
+
+            </label>
+
+            <textarea
+                class="form-control"
+                id="texto"
+                name="texto"
+                rows="4"
+                required>{{ registro.texto if registro else '' }}</textarea>
+
+        </div>
+
+
+        <!-- USUÁRIO -->
+
+        <div class="mb-3">
+
+            <label
+                for="usuario_id"
+                class="form-label">
+
+                Usuário
+
+            </label>
+
+            <select
+                class="form-select"
+                id="usuario_id"
+                name="usuario_id"
+                required>
+
+                <option value="">
+                    Selecione um usuário
+                </option>
+
+                {% for usuario in usuarios %}
+
+                <option
+                    value="{{ usuario.id }}"
+                    {% if registro and registro.usuario_id == usuario.id %}
+                        selected
+                    {% endif %}>
+
+                    {{ usuario.nome }}
+
+                </option>
+
+                {% endfor %}
+
+            </select>
+
+        </div>
+
+
+        <!-- ANÚNCIO -->
+
+        <div class="mb-4">
+
+            <label
+                for="anuncio_id"
+                class="form-label">
+
+                Anúncio
+
+            </label>
+
+            <select
+                class="form-select"
+                id="anuncio_id"
+                name="anuncio_id"
+                required>
+
+                <option value="">
+                    Selecione um anúncio
+                </option>
+
+                {% for anuncio in anuncios %}
+
+                <option
+                    value="{{ anuncio.id }}"
+                    {% if registro and registro.anuncio_id == anuncio.id %}
+                        selected
+                    {% endif %}>
+
+                    {{ anuncio.titulo }}
+
+                </option>
+
+                {% endfor %}
+
+            </select>
+
+        </div>
+
+
+        <!-- BOTÕES -->
+
+        <div class="d-flex gap-2">
+
+            <button
+                type="submit"
+                class="btn btn-primary">
+
+                {% if registro %}
+                    Salvar alterações
+                {% else %}
+                    Cadastrar pergunta
+                {% endif %}
+
+            </button>
+
+
+            <a
+                href="{{ url_for('perguntas') }}"
+                class="btn btn-outline-secondary">
+
+                Cancelar
+
+            </a>
+
+        </div>
+
+    </form>
+
+</div>
 
 {% endblock %}

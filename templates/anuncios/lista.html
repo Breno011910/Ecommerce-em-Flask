@@ -6,115 +6,177 @@ Anúncios
 
 {% block content %}
 
-<h1>Anúncios</h1>
+<div class="d-flex justify-content-between align-items-center mb-4">
 
-<a class="botao"
-   href="{{ url_for('anuncio_novo') }}">
-    + Novo anúncio
-</a>
+    <div>
+        <h1 class="mb-1">Anúncios</h1>
 
-<br><br>
+        <p class="text-muted mb-0">
+            Produtos anunciados no sistema
+        </p>
+    </div>
+
+    <a
+        class="btn btn-primary"
+        href="{{ url_for('anuncio_novo') }}">
+
+        + Novo anúncio
+
+    </a>
+
+</div>
+
 
 {% if registros %}
 
-<table>
+<div class="card shadow-sm border-0">
 
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Título</th>
-            <th>Descrição</th>
-            <th>Preço</th>
-            <th>Quantidade</th>
-            <th>Status</th>
-            <th>Usuário</th>
-            <th>Categoria</th>
-            <th>Ações</th>
-        </tr>
-    </thead>
+    <div class="card-body p-0">
 
-    <tbody>
+        <div class="table-responsive">
 
-        {% for anuncio in registros %}
+            <table class="table table-hover align-middle mb-0">
 
-        <tr>
+                <thead class="table-dark">
 
-            <td>
-                {{ anuncio.id }}
-            </td>
+                    <tr>
 
-            <td>
-                {{ anuncio.titulo }}
-            </td>
+                        <th>ID</th>
 
-            <td>
-                {{ anuncio.descricao }}
-            </td>
+                        <th>Título</th>
 
-            <td>
-                R$ {{ "%.2f"|format(anuncio.preco) }}
-            </td>
+                        <th>Descrição</th>
 
-            <td>
-                {{ anuncio.quantidade }}
-            </td>
+                        <th>Preço</th>
 
-            <td>
-                {{ anuncio.status }}
-            </td>
+                        <th>Qtd.</th>
 
-            <td>
-                {{ anuncio.proprietario.nome }}
-            </td>
+                        <th>Status</th>
 
-            <td>
-                {{ anuncio.categoria.nome }}
-            </td>
+                        <th>Usuário</th>
 
-            <td>
+                        <th>Categoria</th>
 
-                <a href="{{ url_for('anuncio_detalhes', id=anuncio.id) }}">
-                    Ver anúncio
-                </a>
+                        <th class="text-end">
+                            Ações
+                        </th>
 
-                |
+                    </tr>
 
-                <a href="{{ url_for('anuncio_editar', id=anuncio.id) }}">
-                    Editar
-                </a>
+                </thead>
 
-                |
 
-                <form
-                    action="{{ url_for('anuncio_excluir', id=anuncio.id) }}"
-                    method="POST"
-                    style="display:inline;">
+                <tbody>
 
-                    <button
-                        type="submit"
-                        onclick="return confirm('Deseja realmente excluir este anúncio?');">
+                    {% for anuncio in registros %}
 
-                        Excluir
+                    <tr>
 
-                    </button>
+                        <td>
+                            {{ anuncio.id }}
+                        </td>
 
-                </form>
+                        <td class="fw-semibold">
+                            {{ anuncio.titulo }}
+                        </td>
 
-            </td>
+                        <td>
+                            {{ anuncio.descricao }}
+                        </td>
 
-        </tr>
+                        <td class="text-nowrap">
 
-        {% endfor %}
+                            R$ {{ "%.2f"|format(anuncio.preco) }}
 
-    </tbody>
+                        </td>
 
-</table>
+                        <td>
+                            {{ anuncio.quantidade }}
+                        </td>
+
+                        <td>
+
+                            {% if anuncio.status == "Ativo" %}
+
+                                <span class="badge text-bg-success">
+                                    Ativo
+                                </span>
+
+                            {% elif anuncio.status == "Vendido" %}
+
+                                <span class="badge text-bg-secondary">
+                                    Vendido
+                                </span>
+
+                            {% else %}
+
+                                <span class="badge text-bg-warning">
+                                    {{ anuncio.status }}
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+
+                        <td>
+                            {{ anuncio.proprietario.nome }}
+                        </td>
+
+                        <td>
+                            {{ anuncio.categoria.nome }}
+                        </td>
+
+                        <td class="text-end text-nowrap">
+
+                            <a
+                                class="btn btn-sm btn-outline-primary"
+                                href="{{ url_for('anuncio_editar', id=anuncio.id) }}">
+
+                                Editar
+
+                            </a>
+
+
+                            <form
+                                action="{{ url_for('anuncio_excluir', id=anuncio.id) }}"
+                                method="POST"
+                                class="d-inline">
+
+                                <button
+                                    type="submit"
+                                    class="btn btn-sm btn-outline-danger"
+                                    onclick="return confirm('Deseja realmente excluir este anúncio?');">
+
+                                    Excluir
+
+                                </button>
+
+                            </form>
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
 
 {% else %}
 
-<p>
+<div class="alert alert-secondary">
+
     Nenhum anúncio cadastrado.
-</p>
+
+</div>
 
 {% endif %}
 

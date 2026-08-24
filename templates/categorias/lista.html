@@ -6,84 +6,125 @@ Categorias
 
 {% block content %}
 
-<h1>Categorias</h1>
+<div class="d-flex justify-content-between align-items-center mb-4">
 
-<a class="botao"
-   href="{{ url_for('categoria_novo') }}">
-    + Nova categoria
-</a>
+    <div>
+        <h1 class="mb-1">Categorias</h1>
 
-<br><br>
+        <p class="text-muted mb-0">
+            Categorias cadastradas no sistema
+        </p>
+    </div>
+
+    <a
+        class="btn btn-primary"
+        href="{{ url_for('categoria_novo') }}">
+
+        + Nova categoria
+
+    </a>
+
+</div>
+
 
 {% if registros %}
 
-<table>
+<div class="card shadow-sm border-0">
 
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Nome</th>
-            <th>Descrição</th>
-            <th>Ações</th>
-        </tr>
-    </thead>
+    <div class="card-body p-0">
 
-    <tbody>
+        <div class="table-responsive">
 
-        {% for categoria in registros %}
+            <table class="table table-hover align-middle mb-0">
 
-        <tr>
+                <thead class="table-dark">
 
-            <td>
-                {{ categoria.id }}
-            </td>
+                    <tr>
 
-            <td>
-                {{ categoria.nome }}
-            </td>
+                        <th>ID</th>
 
-            <td>
-                {{ categoria.descricao or "-" }}
-            </td>
+                        <th>Nome</th>
 
-            <td>
+                        <th>Descrição</th>
 
-                <a href="{{ url_for('categoria_editar', id=categoria.id) }}">
-                    Editar
-                </a>
+                        <th class="text-end">
+                            Ações
+                        </th>
 
-                |
+                    </tr>
 
-                <form
-                    action="{{ url_for('categoria_excluir', id=categoria.id) }}"
-                    method="POST"
-                    style="display:inline;">
+                </thead>
 
-                    <button
-                        type="submit"
-                        onclick="return confirm('Deseja realmente excluir esta categoria?');">
 
-                        Excluir
+                <tbody>
 
-                    </button>
+                    {% for categoria in registros %}
 
-                </form>
+                    <tr>
 
-            </td>
+                        <td>
+                            {{ categoria.id }}
+                        </td>
 
-        </tr>
+                        <td class="fw-semibold">
+                            {{ categoria.nome }}
+                        </td>
 
-        {% endfor %}
+                        <td>
+                            {{ categoria.descricao or '-' }}
+                        </td>
 
-    </tbody>
+                        <td class="text-end">
 
-</table>
+                            <a
+                                class="btn btn-sm btn-outline-primary"
+                                href="{{ url_for('categoria_editar', id=categoria.id) }}">
+
+                                Editar
+
+                            </a>
+
+
+                            <form
+                                action="{{ url_for('categoria_excluir', id=categoria.id) }}"
+                                method="POST"
+                                class="d-inline">
+
+                                <button
+                                    type="submit"
+                                    class="btn btn-sm btn-outline-danger"
+                                    onclick="return confirm('Deseja realmente excluir esta categoria?');">
+
+                                    Excluir
+
+                                </button>
+
+                            </form>
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
 
 {% else %}
 
-<p>
+<div class="alert alert-secondary">
+
     Nenhuma categoria cadastrada.
-</p>
+
+</div>
 
 {% endif %}
 

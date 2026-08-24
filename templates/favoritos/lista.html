@@ -6,89 +6,146 @@ Favoritos
 
 {% block content %}
 
-<h1>Favoritos</h1>
+<div class="d-flex justify-content-between align-items-center mb-4">
 
-<a class="botao"
-   href="{{ url_for('favorito_novo') }}">
-    + Novo favorito
-</a>
+    <div>
 
-<br><br>
+        <h1 class="mb-1">
+            Favoritos
+        </h1>
+
+        <p class="text-muted mb-0">
+            Anúncios salvos pelos usuários
+        </p>
+
+    </div>
+
+
+    <a
+        class="btn btn-primary"
+        href="{{ url_for('favorito_novo') }}">
+
+        + Novo favorito
+
+    </a>
+
+</div>
+
 
 {% if registros %}
 
-<table>
+<div class="card shadow-sm border-0">
 
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Usuário</th>
-            <th>Anúncio</th>
-            <th>Data</th>
-            <th>Ações</th>
-        </tr>
-    </thead>
+    <div class="card-body p-0">
 
-    <tbody>
+        <div class="table-responsive">
 
-        {% for favorito in registros %}
+            <table class="table table-hover align-middle mb-0">
 
-        <tr>
+                <thead class="table-dark">
 
-            <td>
-                {{ favorito.id }}
-            </td>
+                    <tr>
 
-            <td>
-                {{ favorito.usuario.nome }}
-            </td>
+                        <th>ID</th>
 
-            <td>
-                {{ favorito.anuncio.titulo }}
-            </td>
+                        <th>Usuário</th>
 
-            <td>
-                {{ favorito.data_favorito.strftime('%d/%m/%Y %H:%M') }}
-            </td>
+                        <th>Anúncio</th>
 
-            <td>
+                        <th>Data</th>
 
-                <a href="{{ url_for('favorito_editar', id=favorito.id) }}">
-                    Editar
-                </a>
+                        <th class="text-end">
+                            Ações
+                        </th>
 
-                |
+                    </tr>
 
-                <form
-                    action="{{ url_for('favorito_excluir', id=favorito.id) }}"
-                    method="POST"
-                    style="display:inline;">
+                </thead>
 
-                    <button
-                        type="submit"
-                        onclick="return confirm('Deseja realmente excluir este favorito?');">
 
-                        Excluir
+                <tbody>
 
-                    </button>
+                    {% for favorito in registros %}
 
-                </form>
+                    <tr>
 
-            </td>
+                        <td>
+                            {{ favorito.id }}
+                        </td>
 
-        </tr>
 
-        {% endfor %}
+                        <td class="fw-semibold">
 
-    </tbody>
+                            {{ favorito.usuario.nome }}
 
-</table>
+                        </td>
+
+
+                        <td>
+
+                            {{ favorito.anuncio.titulo }}
+
+                        </td>
+
+
+                        <td class="text-nowrap">
+
+                            {{ favorito.data_favorito.strftime("%d/%m/%Y %H:%M") }}
+
+                        </td>
+
+
+                        <td class="text-end text-nowrap">
+
+                            <a
+                                class="btn btn-sm btn-outline-primary"
+                                href="{{ url_for('favorito_editar', id=favorito.id) }}">
+
+                                Editar
+
+                            </a>
+
+
+                            <form
+                                action="{{ url_for('favorito_excluir', id=favorito.id) }}"
+                                method="POST"
+                                class="d-inline">
+
+                                <button
+                                    type="submit"
+                                    class="btn btn-sm btn-outline-danger"
+                                    onclick="return confirm('Deseja realmente excluir este favorito?');">
+
+                                    Excluir
+
+                                </button>
+
+                            </form>
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
 
 {% else %}
 
-<p>
+<div class="alert alert-secondary">
+
     Nenhum favorito cadastrado.
-</p>
+
+</div>
 
 {% endif %}
 

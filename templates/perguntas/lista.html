@@ -6,127 +6,190 @@ Perguntas
 
 {% block content %}
 
-<h1>Perguntas</h1>
+<div class="d-flex justify-content-between align-items-center mb-4">
 
-<a class="botao"
-   href="{{ url_for('pergunta_novo') }}">
-    + Nova pergunta
-</a>
+    <div>
+        <h1 class="mb-1">Perguntas</h1>
 
-<br><br>
+        <p class="text-muted mb-0">
+            Perguntas realizadas nos anúncios
+        </p>
+    </div>
+
+    <a
+        class="btn btn-primary"
+        href="{{ url_for('pergunta_novo') }}">
+
+        + Nova pergunta
+
+    </a>
+
+</div>
+
 
 {% if registros %}
 
-<table>
+<div class="card shadow-sm border-0">
 
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Pergunta</th>
-            <th>Resposta</th>
-            <th>Usuário</th>
-            <th>Anúncio</th>
-            <th>Data</th>
-            <th>Ações</th>
-        </tr>
-    </thead>
+    <div class="card-body p-0">
 
-    <tbody>
+        <div class="table-responsive">
 
-        {% for pergunta in registros %}
+            <table class="table table-hover align-middle mb-0">
 
-        <tr>
+                <thead class="table-dark">
 
-            <td>
-                {{ pergunta.id }}
-            </td>
+                    <tr>
 
-            <td>
-                {{ pergunta.texto }}
-            </td>
+                        <th>ID</th>
 
-            <td>
+                        <th>Pergunta</th>
 
-                {% if pergunta.resposta %}
+                        <th>Resposta</th>
 
-                    {{ pergunta.resposta }}
+                        <th>Usuário</th>
 
-                {% else %}
+                        <th>Anúncio</th>
 
-                    <span>
-                        Sem resposta
-                    </span>
+                        <th>Data</th>
 
-                {% endif %}
+                        <th class="text-end">
+                            Ações
+                        </th>
 
-            </td>
+                    </tr>
 
-            <td>
-                {{ pergunta.autor.nome }}
-            </td>
+                </thead>
 
-            <td>
-                {{ pergunta.anuncio.titulo }}
-            </td>
 
-            <td>
-                {{ pergunta.data_pergunta.strftime('%d/%m/%Y %H:%M') }}
-            </td>
+                <tbody>
 
-            <td>
+                    {% for pergunta in registros %}
 
-                <a href="{{ url_for('pergunta_editar', id=pergunta.id) }}">
-                    Editar
-                </a>
+                    <tr>
 
-                |
+                        <td>
+                            {{ pergunta.id }}
+                        </td>
 
-                {% if pergunta.resposta %}
 
-                    <span>
-                        Respondida
-                    </span>
+                        <td>
 
-                {% else %}
+                            {{ pergunta.texto }}
 
-                    <a href="{{ url_for('pergunta_responder', id=pergunta.id) }}">
-                        Responder
-                    </a>
+                        </td>
 
-                {% endif %}
 
-                |
+                        <td>
 
-                <form
-                    action="{{ url_for('pergunta_excluir', id=pergunta.id) }}"
-                    method="POST"
-                    style="display:inline;">
+                            {% if pergunta.resposta %}
 
-                    <button
-                        type="submit"
-                        onclick="return confirm('Deseja realmente excluir esta pergunta?');">
+                                <span class="text-success">
+                                    {{ pergunta.resposta }}
+                                </span>
 
-                        Excluir
+                            {% else %}
 
-                    </button>
+                                <span class="badge text-bg-warning">
+                                    Aguardando resposta
+                                </span>
 
-                </form>
+                            {% endif %}
 
-            </td>
+                        </td>
 
-        </tr>
 
-        {% endfor %}
+                        <td>
 
-    </tbody>
+                            {{ pergunta.autor.nome }}
 
-</table>
+                        </td>
+
+
+                        <td>
+
+                            {{ pergunta.anuncio.titulo }}
+
+                        </td>
+
+
+                        <td class="text-nowrap">
+
+                            {{ pergunta.data_pergunta.strftime("%d/%m/%Y %H:%M") }}
+
+                        </td>
+
+
+                        <td class="text-end text-nowrap">
+
+                            <a
+                                class="btn btn-sm btn-outline-primary"
+                                href="{{ url_for('pergunta_editar', id=pergunta.id) }}">
+
+                                Editar
+
+                            </a>
+
+
+                            {% if pergunta.resposta %}
+
+                                <span class="badge text-bg-success ms-1">
+                                    Respondida
+                                </span>
+
+                            {% else %}
+
+                                <a
+                                    class="btn btn-sm btn-outline-success ms-1"
+                                    href="{{ url_for('pergunta_responder', id=pergunta.id) }}">
+
+                                    Responder
+
+                                </a>
+
+                            {% endif %}
+
+
+                            <form
+                                action="{{ url_for('pergunta_excluir', id=pergunta.id) }}"
+                                method="POST"
+                                class="d-inline">
+
+                                <button
+                                    type="submit"
+                                    class="btn btn-sm btn-outline-danger ms-1"
+                                    onclick="return confirm('Deseja realmente excluir esta pergunta?');">
+
+                                    Excluir
+
+                                </button>
+
+                            </form>
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
 
 {% else %}
 
-<p>
+<div class="alert alert-secondary">
+
     Nenhuma pergunta cadastrada.
-</p>
+
+</div>
 
 {% endif %}
 

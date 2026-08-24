@@ -1,53 +1,108 @@
 {% extends "base.html" %}
 
 {% block title %}
-Responder Pergunta
+Responder pergunta
 {% endblock %}
+
 
 {% block content %}
 
-<h1>Responder Pergunta</h1>
+<div class="formulario">
 
-<p>
-    <strong>Usuário:</strong>
-    {{ registro.autor.nome }}
-</p>
+    <div class="mb-4">
 
-<p>
-    <strong>Anúncio:</strong>
-    {{ registro.anuncio.titulo }}
-</p>
+        <h1>
+            Responder pergunta
+        </h1>
 
-<p>
-    <strong>Pergunta:</strong>
-    {{ registro.texto }}
-</p>
+        <p class="text-muted mb-0">
+            Responda à pergunta realizada sobre o anúncio.
+        </p>
 
-<form method="POST">
+    </div>
 
-    <label for="resposta">
-        Resposta:
-    </label>
 
-    <br>
+    <div class="card bg-light border-0 mb-4">
 
-    <textarea
-        id="resposta"
-        name="resposta"
-        rows="5"
-        required
-    >{{ registro.resposta or '' }}</textarea>
+        <div class="card-body">
 
-    <br><br>
+            <p class="mb-2">
 
-    <button type="submit">
-        Enviar resposta
-    </button>
+                <strong>Usuário:</strong>
 
-    <a href="{{ url_for('perguntas') }}">
-        Cancelar
-    </a>
+                {{ registro.autor.nome }}
 
-</form>
+            </p>
+
+
+            <p class="mb-2">
+
+                <strong>Anúncio:</strong>
+
+                {{ registro.anuncio.titulo }}
+
+            </p>
+
+
+            <p class="mb-0">
+
+                <strong>Pergunta:</strong>
+
+                {{ registro.texto }}
+
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <form method="POST">
+
+        <div class="mb-4">
+
+            <label
+                for="resposta"
+                class="form-label">
+
+                Resposta
+
+            </label>
+
+            <textarea
+                class="form-control"
+                id="resposta"
+                name="resposta"
+                rows="5"
+                placeholder="Digite a resposta..."
+                required>{{ registro.resposta or '' }}</textarea>
+
+        </div>
+
+
+        <div class="d-flex gap-2">
+
+            <button
+                type="submit"
+                class="btn btn-success">
+
+                Enviar resposta
+
+            </button>
+
+
+            <a
+                href="{{ url_for('perguntas') }}"
+                class="btn btn-outline-secondary">
+
+                Cancelar
+
+            </a>
+
+        </div>
+
+    </form>
+
+</div>
 
 {% endblock %}
