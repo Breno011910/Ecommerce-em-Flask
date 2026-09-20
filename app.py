@@ -342,6 +342,66 @@ def login():
         "login.html"
     )
 
+# ==============================
+# CADASTRO
+#===============================
+
+@app.route("/cadastro", methods=["GET", "POST"])
+def cadastro():
+
+    if current_user.is_authenticated:
+        return redirect(
+            url_for("index")
+        )
+
+    if request.method == "POST":
+
+        nome = request.form["nome"]
+        email = request.form["email"]
+        senha = request.form["senha"]
+
+        usuario_existente = Usuario.query.filter_by(
+            email=email
+        ).first()
+
+        if usuario_existente:
+            flash(
+                "Este e-mail já está cadastrado.",
+                "danger"
+            )
+
+            return redirect(
+                url_for("cadastro")
+            )
+
+        senha_hash = generate_password_hash(
+            senha
+        )
+
+        novo_usuario = Usuario(
+            nome=nome,
+            email=email,
+            senha=senha_hash
+        )
+
+        db.session.add(
+            novo_usuario
+        )
+
+        db.session.commit()
+
+        flash(
+            "Cadastro realizado com sucesso. Faça login.",
+            "success"
+        )
+
+        return redirect(
+            url_for("login")
+        )
+
+    return render_template(
+        "cadastro.html"
+    )
 
 @app.route("/logout")
 @login_required

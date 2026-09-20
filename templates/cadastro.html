@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block title %}
-Login
+Cadastro
 {% endblock %}
 
 {% block content %}
@@ -18,17 +18,37 @@ Login
             <div class="text-center mb-4">
 
                 <h1 class="h3 fw-bold">
-                    Login
+                    Criar cadastro
                 </h1>
 
                 <p class="text-muted mb-0">
-                    Entre com seus dados para acessar o sistema.
+                    Preencha seus dados para criar sua conta.
                 </p>
 
             </div>
 
 
             <form method="POST">
+
+                <div class="mb-3">
+
+                    <label
+                        for="nome"
+                        class="form-label"
+                    >
+                        Nome
+                    </label>
+
+                    <input
+                        type="text"
+                        class="form-control"
+                        id="nome"
+                        name="nome"
+                        required
+                    >
+
+                </div>
+
 
                 <div class="mb-3">
 
@@ -76,7 +96,7 @@ Login
                         type="submit"
                         class="btn btn-primary"
                     >
-                        Entrar
+                        Criar conta
                     </button>
 
                 </div>
@@ -87,11 +107,11 @@ Login
             <div class="text-center mt-4">
 
                 <span class="text-muted">
-                    Ainda não possui uma conta?
+                    Já possui uma conta?
                 </span>
 
-                <a href="{{ url_for('cadastro') }}">
-                    Criar cadastro
+                <a href="{{ url_for('login') }}">
+                    Fazer login
                 </a>
 
             </div>
